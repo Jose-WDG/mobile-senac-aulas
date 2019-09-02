@@ -7,8 +7,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.brq.layout.Dao.DiaDao;
+import com.brq.layout.DataBese.GestorDataBase;
+import com.brq.layout.DataBese.dao.RoomDiaDao;
 import com.brq.layout.Model.DiaSemana;
 import com.brq.layout.R;
 
@@ -19,13 +22,17 @@ public class FormularioDiaSemanaActivity extends AppCompatActivity {
     private EditText nomeDiaSema;
     private EditText nomeMateria;
     private EditText sala;
-    private final DiaDao dao = new DiaDao();
+    private RoomDiaDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(activity_formulario_dia_semana);
         setTitle(TITULO_APPBAR);
+        GestorDataBase dataBase = Room.databaseBuilder(this, GestorDataBase.class, "Gestor.db")
+                .allowMainThreadQueries()
+                .build();
+        dao = dataBase.getRoomDiaDao();
         initComponents();
 
     }
@@ -58,7 +65,7 @@ public class FormularioDiaSemanaActivity extends AppCompatActivity {
         sala = findViewById(R.id.activity_for_dia_nome_sala);
     }
 
-    private void salvarRegistro(DiaSemana novoDia, DiaDao dao) {
+    private void salvarRegistro(DiaSemana novoDia, RoomDiaDao dao) {
 
         if (nomeDiaSema.getText().toString().equals("")) {
             Toast.makeText(FormularioDiaSemanaActivity.this, "Nome do Dia obrigatório!", Toast.LENGTH_LONG).show();

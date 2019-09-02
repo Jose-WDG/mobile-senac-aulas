@@ -20,12 +20,13 @@ import static com.brq.layout.ui.activity.ConstantesActivities.CHAVE_DIA;
 public class ListaDiaSemanaActivity extends AppCompatActivity {
 
 
-    private final ListaDiasView listaDiasView = new ListaDiasView(this);
+    private ListaDiasView listaDiasView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_lista_semana);
+        listaDiasView = new ListaDiasView(this);
         configuraFab();
         configList();
     }

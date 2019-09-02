@@ -1,19 +1,29 @@
 package com.brq.layout.Model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class DiaSemana implements Serializable {
+
+    @PrimaryKey(autoGenerate = true)
     private int id =0;
+
     private String txtNomeDia;
     private String txtNomeMat;
     private String txtSala;
 
+    @Ignore
     public DiaSemana(String txtNomeDia, String txtNomeMat, String txtSala) {
-
         this.txtNomeDia = txtNomeDia;
         this.txtNomeMat = txtNomeMat;
         this.txtSala = txtSala;
     }
+
+    public DiaSemana(){}
 
 
     public String getTxtNomeDia() {

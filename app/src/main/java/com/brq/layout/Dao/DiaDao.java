@@ -37,16 +37,16 @@ public class DiaDao {
 //    }
 // --Commented out by Inspection STOP (30/08/2019 11:05)
 
-    public boolean updateDay(DiaSemana dia) {
+    public void updateDay(DiaSemana dia) {
         if (!registros.isEmpty()) {
             DiaSemana diaEncontrado = BuscaItemPorId(dia);
             if (diaEncontrado != null) {
                 int posicaoDia = registros.indexOf(diaEncontrado);
                 registros.set(posicaoDia, dia);
-                return true;
+
             }
         }
-        return false;
+
     }
 
     private DiaSemana BuscaItemPorId(DiaSemana dia) {

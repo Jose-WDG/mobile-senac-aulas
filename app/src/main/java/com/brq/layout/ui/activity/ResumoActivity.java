@@ -7,8 +7,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.brq.layout.Dao.DiaDao;
+import com.brq.layout.DataBese.GestorDataBase;
+import com.brq.layout.DataBese.dao.RoomDiaDao;
 import com.brq.layout.Model.DiaSemana;
 import com.brq.layout.R;
 
@@ -16,7 +19,7 @@ public class ResumoActivity extends AppCompatActivity {
 
     private static final String TITULO_RESUMO = "Resumo";
     private static final String CHAVE_ITEM_CLICADO = "itemClicado";
-    private final DiaDao dao = new DiaDao();
+    private RoomDiaDao dao;
     private EditText activityResumeNomeDiaEdit, activityResumeNomeMat, activityResumeSal;
     private Button btnUpdate;
     private DiaSemana itemClicado;
@@ -26,6 +29,10 @@ public class ResumoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resumo);
         setTitle(TITULO_RESUMO);
+        GestorDataBase dataBase = Room.databaseBuilder(this, GestorDataBase.class, "Gestor.db")
+                .allowMainThreadQueries()
+                .build();
+        dao = dataBase.getRoomDiaDao();
         initComponents();
         returnItemClicado();
         insertDadosFormAtt();
@@ -55,9 +62,7 @@ public class ResumoActivity extends AppCompatActivity {
             itemClicado.setTxtNomeMat(nomeAttMateria);
             itemClicado.setTxtSala(salaAtt);
 
-            if (dao.updateDay(itemClicado)) {
-                Toast.makeText(ResumoActivity.this, "Registro atualizado com sucesso.", Toast.LENGTH_LONG).show();
-            }
+            dao.updateDay(itemClicado);
             finish();
         });
     }
